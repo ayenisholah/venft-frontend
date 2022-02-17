@@ -1,8 +1,20 @@
+import { Provider as ReduxProvider } from 'react-redux'
+import store from '../state/store'
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function App({ Component, pageProps }: IApp) {
+  const getLayout = Component.getLayout ?? ((page: any) => page)
+
+  return (
+    <ReduxProvider store={store}>
+      {getLayout(<Component {...pageProps} />)}
+    </ReduxProvider>
+  )
 }
 
-export default MyApp
+export default App
+
+export interface IApp {
+  Component: any
+  pageProps: any
+}
