@@ -14,6 +14,7 @@ module.exports = {
       bold: 700,
     },
     fontSize: {
+      xs: ['13px', { lineHeight: '18px' }],
       sm: [
         '15px',
         {
@@ -28,11 +29,6 @@ module.exports = {
         theme: '#389D3C',
         white: '#FFFFFF',
         'frog-nation-gray': '#676C67',
-        // nav: '#FFFFFF',
-        // secondary: '',
-        // badge: '',
-        // input: '',
-        // 'input-border': '',
         'selected-text': '#389D3C',
       },
       fontFamily: {

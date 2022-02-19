@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NextLink from 'next/link'
+import { Transition } from '@headlessui/react'
 import { Logo } from '../assets/icons/Logo'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -34,6 +35,7 @@ let web3: Web3 | undefined = undefined
 export const Header = (props: any) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   async function handleClick() {
     if (!window.ethereum) {
@@ -79,39 +81,120 @@ export const Header = (props: any) => {
 
   return (
     <header className="pt-[22px]">
-      <div className="container mx-auto flex items-center justify-between">
-        <Link href="/" passHref>
-          <div className="logo flex w-[121px] cursor-pointer items-center">
-            <Logo />
-            <div className="logo-text ml-[10px] text-sm font-bold text-frog-nation-gray">
-              FrogNation
+      <nav className="container max-w-full">
+        <div className="mx-auto flex max-w-full items-center justify-between">
+          <Link href="/" passHref>
+            <div className="logo hidden w-[121px] cursor-pointer items-center tablet:flex">
+              <Logo />
+              <div className="logo-text ml-[10px] text-sm font-bold text-frog-nation-gray">
+                FrogNation
+              </div>
+            </div>
+          </Link>
+          <div className="hidden tablet:block">
+            <div className="nav-links flex w-[356px] items-center justify-between">
+              {items.map((item) => (
+                <NextLink key={item.href} href={item.href} passHref>
+                  <a
+                    className={`text-sm font-bold ${
+                      router.asPath === item.href
+                        ? 'text-theme'
+                        : 'text-frog-nation-gray'
+                    }`}
+                  >
+                    {item.title}
+                  </a>
+                </NextLink>
+              ))}
             </div>
           </div>
-        </Link>
-        <div className="nav-links flex w-[356px] items-center justify-between">
-          {items.map((item) => (
-            <NextLink key={item.href} href={item.href} passHref>
-              <a
-                className={`text-sm font-bold ${
-                  router.asPath === item.href
-                    ? 'text-theme'
-                    : 'text-frog-nation-gray'
-                }`}
+          <div className="mr-10 flex tablet:hidden ">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              type="button"
+              className="inline-flex items-center justify-center rounded-md  p-2 text-theme"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span className="sr-only">Open main menu</span>
+              {!isOpen ? (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
+          <div>
+            <button
+              className="h-[40px] w-[132px] rounded-full bg-theme py-[11px] px-[20px] text-xs font-bold text-white tablet:w-[153px] tablet:py-[10px] tablet:px-[23px] tablet:text-sm"
+              onClick={handleClick}
+            >
+              Connect wallet
+            </button>
+          </div>
+        </div>
+        <Transition
+          show={isOpen}
+          enter="transition ease-out duration-100 transform"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="transition ease-in duration-75 transform"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
+        >
+          {(ref) => (
+            <div className="tablet:hidden" id="mobile-menu">
+              <div
+                ref={ref}
+                className="space-y-1 bg-white px-2 pt-2 pb-3 mobile:px-3"
               >
-                {item.title}
-              </a>
-            </NextLink>
-          ))}
-        </div>
-        <div>
-          <button
-            className="h-[40px] w-[153px] rounded-full bg-theme py-[10px] px-[23px] text-sm font-bold text-white"
-            onClick={handleClick}
-          >
-            Connect wallet
-          </button>
-        </div>
-      </div>
+                {items.map((item) => (
+                  <NextLink key={item.href} href={item.href} passHref>
+                    <a
+                      onClick={() => setIsOpen(false)}
+                      className={`block rounded-md px-3 py-2 text-sm font-bold hover:text-theme ${
+                        router.asPath === item.href
+                          ? 'text-theme'
+                          : 'text-frog-nation-gray'
+                      }`}
+                    >
+                      {item.title}
+                    </a>
+                  </NextLink>
+                ))}
+              </div>
+            </div>
+          )}
+        </Transition>
+      </nav>
     </header>
   )
 }
