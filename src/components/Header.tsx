@@ -80,7 +80,7 @@ export const Header = (props: any) => {
   }
 
   return (
-    <header className="pt-[22px]">
+    <header className="mb-12 pt-[16px] tablet:mb-[86px] tablet:pt-[22px]">
       <nav className="container max-w-full">
         <div className="mx-auto flex max-w-full items-center justify-between">
           <Link href="/" passHref>
@@ -171,7 +171,7 @@ export const Header = (props: any) => {
           leaveTo="opacity-0 scale-95"
         >
           {(ref) => (
-            <div className="tablet:hidden" id="mobile-menu">
+            <div className="absolute tablet:hidden" id="mobile-menu">
               <div
                 ref={ref}
                 className="space-y-1 bg-white px-2 pt-2 pb-3 mobile:px-3"
