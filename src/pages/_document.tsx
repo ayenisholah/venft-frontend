@@ -11,6 +11,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&display=swap"
             rel="stylesheet"
           />
+          <link rel="icon" href="/logo.ico" />
         </Head>
         <body className="bg-body font-nunito mobile:px-4 tablet:px-14 laptop:px-16">
           <Main />
