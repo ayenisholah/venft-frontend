@@ -13,6 +13,7 @@ class MyDocument extends Document {
           />
           <link rel="icon" href="/logo.ico" />
         </Head>
+        <title>FrognationDaAO</title>
         <body className="bg-body font-nunito">
           <Main />
           <NextScript />
