@@ -12,15 +12,15 @@ module.exports = {
     },
     fontWeight: {
       bold: 700,
+      black: 900,
     },
     fontSize: {
       xs: ['13px', { lineHeight: '18px' }],
-      sm: [
-        '15px',
-        {
-          lineHeight: '20px',
-        },
-      ],
+      sm: ['15px', { lineHeight: '20px' }],
+      base: ['16px', { lineHeight: '26.4px' }],
+      md: ['18px', { lineHeight: '29.7px' }],
+      lg: ['32px', { lineHeight: '44px' }],
+      xl: ['64px', { lineHeight: '87px' }],
     },
 
     extend: {
@@ -29,6 +29,7 @@ module.exports = {
         theme: '#389D3C',
         white: '#FFFFFF',
         'frog-nation-gray': '#676C67',
+        'frog-nation-black': '#262F27',
         'selected-text': '#389D3C',
       },
       fontFamily: {

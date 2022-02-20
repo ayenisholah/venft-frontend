@@ -80,7 +80,7 @@ export const Header = (props: any) => {
   }
 
   return (
-    <header className="mb-12 pt-[16px] tablet:mb-[86px] tablet:pt-[22px]">
+    <header className="mb-12 px-4 pt-4 tablet:mb-[86px] tablet:px-12 tablet:pt-[22px] laptop:px-16">
       <nav className="container max-w-full">
         <div className="mx-auto flex max-w-full items-center justify-between">
           <Link href="/" passHref>

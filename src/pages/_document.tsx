@@ -13,7 +13,7 @@ class MyDocument extends Document {
           />
           <link rel="icon" href="/logo.ico" />
         </Head>
-        <body className="bg-body font-nunito mobile:px-4 tablet:px-14 laptop:px-16">
+        <body className="bg-body font-nunito">
           <Main />
           <NextScript />
         </body>

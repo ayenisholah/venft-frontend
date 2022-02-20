@@ -1,3 +1,4 @@
+import Footer from './Footer'
 import { Header } from './Header'
 
 export const Layout = (props: any) => {
@@ -7,6 +8,7 @@ export const Layout = (props: any) => {
     <>
       <Header />
       {children}
+      <Footer />
     </>
   )
 }
