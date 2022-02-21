@@ -5,7 +5,7 @@ import Twitter from '../assets/icons/Twitter'
 
 export default function Footer() {
   return (
-    <div className="w-full">
+    <div className="tablet:[mb-82px] mb-[74px] w-full">
       <div className="socials mx-auto mb-4 flex w-[144px] justify-between">
         <a
           target="_blank"
