@@ -6,8 +6,23 @@ import Spell from '../assets/icons/Spell'
 import { Layout } from '../components/Layout'
 import chart from '../assets/Infographic.svg'
 import Image from 'next/image'
+import { useState } from 'react'
 
 export default function Frogeconomics() {
+  const [amount, setAmount] = useState<number>(1)
+
+  const increment = () => {
+    setAmount((prev) => prev + 1)
+  }
+
+  const decrement = (amount: number) => {
+    amount != 1 ? setAmount((prev) => prev - 1) : null
+  }
+
+  const setCount = (count: number) => {
+    setAmount(count)
+  }
+
   return (
     <div className="mx-auto w-full px-4 tablet:px-16">
       <div className="flex flex-col laptop:flex-row laptop:justify-center">
@@ -47,23 +62,40 @@ export default function Frogeconomics() {
             Select NFTs amount
           </h3>
           <div className="mb-6 flex items-center">
-            <Minus />
+            <button onClick={() => decrement(amount)}>
+              <Minus />
+            </button>
             <span className="mx-[21px] rounded-md border border-[#C8CEC8] py-[11px] px-6">
-              1
+              {amount}
             </span>
-            <Plus />
+
+            <button onClick={increment}>
+              <Plus />
+            </button>
           </div>
           <div className="mb-10 flex justify-between  text-[0.75rem] text-frog-nation-gray">
-            <button className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] px-8 py-2 font-bold leading-[16.37px]">
+            <button
+              className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] px-8 py-2 font-bold leading-[16.37px]"
+              onClick={() => setCount(1)}
+            >
               1
             </button>
-            <button className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] px-[28px] py-2 font-bold leading-[16.37px]">
+            <button
+              className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] px-[28px] py-2 font-bold leading-[16.37px]"
+              onClick={() => setCount(10)}
+            >
               10
             </button>
-            <button className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] py-2 pl-6 pr-[26px] font-bold leading-[16.37px]">
+            <button
+              className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] py-2 pl-6 pr-[26px] font-bold leading-[16.37px]"
+              onClick={() => setCount(100)}
+            >
               100
             </button>
-            <button className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] py-2 pl-[19px] pr-[21px] font-bold leading-[16.37px]">
+            <button
+              className="h-[32px] w-[72px] rounded-lg bg-[#E9EEE9] py-2 pl-[19px] pr-[21px] font-bold leading-[16.37px]"
+              onClick={() => setCount(1000)}
+            >
               1,000
             </button>
           </div>
