@@ -6,10 +6,6 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Web3 from 'web3'
 import { useAppDispatch } from '../state/hooks'
-import fetchJson from '../utils/fetchJson'
-import { IUser } from '../interfaces/user.interface'
-import { handleAuthenticate, handleSignup } from '../utils/auth'
-import { activate } from '../state/reducers/auth.reducer'
 
 const items = [
   {
@@ -30,53 +26,17 @@ const items = [
   },
 ]
 
-let web3: Web3 | undefined = undefined
-
 export const Header = (props: any) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [account, setAccount] = useState<string | null>(null)
 
-  async function handleClick() {
-    if (!window.ethereum) {
-      window.alert('Please install Metamask wallet first')
-      return
-    }
-
-    if (!web3) {
-      try {
-        await window.ethereum.enable()
-        web3 = new Web3(window.ethereum)
-      } catch (error) {
-        // show notification
-        window.alert('You need to allow MetaMask.')
-        return
-      }
-    }
-
-    try {
-      const coinbase = await web3.eth.getCoinbase()
-      if (!coinbase) {
-        window.alert('Please activate MetaMask first.')
-        return
-      }
-      const account = coinbase.toLowerCase()
-      const res: any = await fetchJson(`api/user?account=${account}`)
-      const { user }: { user: IUser } = res
-
-      const nonce = user.nonce
-
-      const { signature } = await handleSignMessage({ account, nonce })
-
-      const data = await handleAuthenticate({ account, signature })
-      console.log({ data })
-
-      dispatch(activate(account))
-    } catch (error) {
-      console.log(error)
-      // show notification
-      // }
-    }
+  async function connect() {
+    const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545')
+    const accounts = await web3.eth.requestAccounts()
+    setAccount(accounts[0])
+    // const contract = new web3.eth.Contract(VENFT_ABI, VENFT_ADDRESS)
   }
 
   return (
@@ -155,7 +115,7 @@ export const Header = (props: any) => {
           <div>
             <button
               className="h-[40px] w-[132px] rounded-full bg-theme py-[11px] px-[20px] text-xs font-bold text-white tablet:w-[153px] tablet:py-[10px] tablet:px-[23px] tablet:text-sm"
-              onClick={handleClick}
+              onClick={connect}
             >
               Connect wallet
             </button>
@@ -197,25 +157,4 @@ export const Header = (props: any) => {
       </nav>
     </header>
   )
-}
-
-export async function handleSignMessage({
-  account,
-  nonce,
-}: {
-  account: string
-  nonce: string
-}) {
-  try {
-    const signature = await web3!.eth.personal.sign(
-      `I am signing my one-time nonce: ${nonce}`,
-      account,
-      '' // MetaMask will ignore the password argument here
-    )
-
-    return { account, signature }
-  } catch (err) {
-    throw new Error('You need to sign the message to be able to log in.')
-    // show notification
-  }
 }
