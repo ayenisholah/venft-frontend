@@ -10,6 +10,7 @@ import { useState } from 'react'
 
 export default function Frogeconomics() {
   const [amount, setAmount] = useState<number>(1)
+  const [input, setInput] = useState<string>('1')
 
   const increment = () => {
     setAmount((prev) => prev + 1)
@@ -20,7 +21,7 @@ export default function Frogeconomics() {
   }
 
   const setCount = (count: number) => {
-    setAmount(count)
+    setAmount((prev) => prev + count)
   }
 
   return (
@@ -65,9 +66,19 @@ export default function Frogeconomics() {
             <button onClick={() => decrement(amount)}>
               <Minus />
             </button>
-            <span className="mx-[21px] rounded-md border border-[#C8CEC8] py-[11px] px-6">
-              {amount}
-            </span>
+            <input
+              name="amount"
+              placeholder="1"
+              onChange={(event) =>
+                setAmount(
+                  isNaN(parseInt(event.target.value))
+                    ? 0
+                    : parseInt(event.target.value)
+                )
+              }
+              value={amount}
+              className="mx-[21px] w-[100px] max-w-fit rounded-md border border-[#C8CEC8] py-[11px] px-6 text-center"
+            />
 
             <button onClick={increment}>
               <Plus />
