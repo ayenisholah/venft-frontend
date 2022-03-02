@@ -13,11 +13,11 @@ import { activate } from '../state/reducers/auth.reducer'
 
 const items = [
   {
-    href: '/frogeconomics',
+    href: '/',
     title: 'FrogEconomics',
   },
   {
-    href: '/',
+    href: '/veNFT',
     title: 'veNFT',
   },
   {

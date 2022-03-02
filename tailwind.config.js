@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
@@ -34,6 +35,7 @@ module.exports = {
       },
       fontFamily: {
         nunito: ['Nunito Sans', 'sans-serif'],
+        dmsans: ['DM Sans', 'sans-serif'],
       },
     },
   },
