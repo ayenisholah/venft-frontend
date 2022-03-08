@@ -3,7 +3,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html className="dark">
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -15,7 +15,7 @@ class MyDocument extends Document {
           <link rel="icon" href="/logo.ico" />
         </Head>
         <title>FrognationDAO</title>
-        <body className="bg-body font-nunito">
+        <body className="bg-body font-nunito dark:bg-[#161614]">
           <Main />
           <NextScript />
         </body>

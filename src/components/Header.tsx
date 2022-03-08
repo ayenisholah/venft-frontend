@@ -4,8 +4,10 @@ import { Transition } from '@headlessui/react'
 import { Logo } from '../assets/icons/Logo'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import Web3 from 'web3'
-import { useAppDispatch } from '../state/hooks'
+import { useEthers } from '@usedapp/core'
+import Sun from '../assets/icons/Sun'
+import Moon from '../assets/icons/Moon'
+import { useTheme } from 'next-themes'
 
 const items = [
   {
@@ -28,15 +30,17 @@ const items = [
 
 export const Header = (props: any) => {
   const router = useRouter()
-  const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [account, setAccount] = useState<string | null>(null)
+  const { theme, setTheme } = useTheme()
+
+  const { activateBrowserWallet, deactivate, account } = useEthers()
 
   async function connect() {
-    const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545')
-    const accounts = await web3.eth.requestAccounts()
-    setAccount(accounts[0])
-    // const contract = new web3.eth.Contract(VENFT_ABI, VENFT_ADDRESS)
+    activateBrowserWallet()
+  }
+
+  async function disconnect() {
+    deactivate()
   }
 
   return (
@@ -46,7 +50,7 @@ export const Header = (props: any) => {
           <Link href="/" passHref>
             <div className="logo hidden w-[121px] cursor-pointer items-center tablet:flex">
               <Logo />
-              <div className="logo-text ml-[10px] text-sm font-bold text-frog-nation-gray">
+              <div className="logo-text ml-[10px] text-sm font-bold text-frog-nation-gray dark:text-darkmode-offwhite">
                 FrogNation
               </div>
             </div>
@@ -58,8 +62,8 @@ export const Header = (props: any) => {
                   <a
                     className={`text-sm font-bold ${
                       router.asPath === item.href
-                        ? 'text-theme'
-                        : 'text-frog-nation-gray'
+                        ? 'text-theme dark:text-darkmode-offwhite'
+                        : 'text-frog-nation-gray dark:text-darkmode-light-gray'
                     }`}
                   >
                     {item.title}
@@ -112,12 +116,27 @@ export const Header = (props: any) => {
               )}
             </button>
           </div>
-          <div>
+          <div className="flex items-center justify-between">
+            {account ? (
+              <button
+                className="mr-6 h-[40px] w-[132px] rounded-full bg-theme py-[11px] px-[20px] text-xs font-bold text-white tablet:w-[153px] tablet:py-[10px] tablet:px-[23px] tablet:text-sm"
+                onClick={disconnect}
+              >
+                Disconnect
+              </button>
+            ) : (
+              <button
+                className="mr-6 h-[40px] w-[132px] rounded-full bg-theme py-[11px] px-[20px] text-xs font-bold text-white tablet:w-[153px] tablet:py-[10px] tablet:px-[23px] tablet:text-sm"
+                onClick={connect}
+              >
+                Connect wallet
+              </button>
+            )}
+
             <button
-              className="h-[40px] w-[132px] rounded-full bg-theme py-[11px] px-[20px] text-xs font-bold text-white tablet:w-[153px] tablet:py-[10px] tablet:px-[23px] tablet:text-sm"
-              onClick={connect}
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              Connect wallet
+              {theme === 'dark' ? <Sun /> : theme === 'light' ? <Moon /> : null}
             </button>
           </div>
         </div>

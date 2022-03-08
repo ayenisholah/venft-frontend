@@ -1,17 +1,31 @@
-import { Provider as ReduxProvider } from 'react-redux'
-import store from '../state/store'
 import '../styles/globals.css'
-import { useEffect, useState } from 'react'
-import { VENFT_ADDRESS, VENFT_ABI } from '../../config'
-import Web3 from 'web3'
+import { useEffect } from 'react'
+import { ThemeProvider } from 'next-themes'
+import { Mainnet, DAppProvider, Config } from '@usedapp/core'
+
+const config: Config = {
+  readOnlyChainId: Mainnet.chainId,
+  readOnlyUrls: {
+    [Mainnet.chainId]:
+      'https://mainnet.infura.io/v3/62687d1a985d4508b2b7a24827551934',
+  },
+}
 
 function App({ Component, pageProps }: IApp) {
   const getLayout = Component.getLayout ?? ((page: any) => page)
 
+  useEffect(() => {
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? localStorage.setItem('theme', 'dark')
+      : localStorage.setItem('theme', 'light')
+  }, [])
+
   return (
-    <ReduxProvider store={store}>
-      {getLayout(<Component {...pageProps} />)}
-    </ReduxProvider>
+    <DAppProvider config={config}>
+      <ThemeProvider attribute="class">
+        {getLayout(<Component {...pageProps} />)}
+      </ThemeProvider>
+    </DAppProvider>
   )
 }
 
