@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import { useEffect } from 'react'
 import { ThemeProvider } from 'next-themes'
 import { Mainnet, DAppProvider, Config } from '@usedapp/core'
+import { useTheme } from 'next-themes'
 
 const config: Config = {
   readOnlyChainId: Mainnet.chainId,
@@ -12,7 +13,13 @@ const config: Config = {
 }
 
 function App({ Component, pageProps }: IApp) {
+  const { theme, setTheme } = useTheme()
+
   const getLayout = Component.getLayout ?? ((page: any) => page)
+
+  useEffect(() => {
+    setTheme('light')
+  }, [])
 
   return (
     <DAppProvider config={config}>
