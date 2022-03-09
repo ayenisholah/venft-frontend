@@ -147,7 +147,7 @@ export const Header = (props: any) => {
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              {theme === 'dark' ? <Sun /> : <Moon />}
+              {theme === 'dark' ? <Sun /> : theme === 'light' ? <Moon /> : null}
             </button>
           </div>
         </div>
