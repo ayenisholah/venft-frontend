@@ -14,10 +14,6 @@ const config: Config = {
 function App({ Component, pageProps }: IApp) {
   const getLayout = Component.getLayout ?? ((page: any) => page)
 
-  useEffect(() => {
-    localStorage.setItem('theme', 'light')
-  }, [])
-
   return (
     <DAppProvider config={config}>
       <ThemeProvider attribute="class">

@@ -403,7 +403,7 @@ export default function Frogeconomics() {
             </Accordion>
           </div>
           <div className="mb-3">
-            <Accordion className="rounded-lg bg-[#E9EEE9] dark:border-darkmode-border dark:bg-[#1D1D1A] dark:text-darkmode-offwhite">
+            <Accordion className="rounded-lg bg-[#E9EEE9]  dark:bg-[#1D1D1A] dark:text-darkmode-offwhite">
               <AccordionSummary
                 expandIcon={
                   <ExpandMoreIcon className="dark:text-darkmode-offwhite" />
