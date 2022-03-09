@@ -7,8 +7,8 @@ export default function Moon() {
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 25 25"
-      height={25}
-      width={25}
+      height="25"
+      width="25"
     >
       <title>Moon</title>
       <path

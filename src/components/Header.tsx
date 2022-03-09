@@ -31,7 +31,7 @@ const items = [
 export const Header = (props: any) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const { theme, setTheme } = useTheme()
+  let { theme, setTheme } = useTheme()
 
   const { activateBrowserWallet, deactivate, account } = useEthers()
 
@@ -41,6 +41,17 @@ export const Header = (props: any) => {
 
   async function disconnect() {
     deactivate()
+  }
+
+  console.log(theme)
+
+  if (typeof window !== undefined) {
+    theme =
+      typeof theme !== undefined
+        ? theme
+        : window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? theme === 'dark'
+        : theme === 'light'
   }
 
   return (
@@ -136,13 +147,7 @@ export const Header = (props: any) => {
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              {theme === 'dark' ? (
-                <Sun />
-              ) : theme === 'light' ? (
-                <Moon />
-              ) : (
-                <Sun />
-              )}
+              {theme === 'dark' ? <Sun /> : <Moon />}
             </button>
           </div>
         </div>
