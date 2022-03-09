@@ -15,9 +15,7 @@ function App({ Component, pageProps }: IApp) {
   const getLayout = Component.getLayout ?? ((page: any) => page)
 
   useEffect(() => {
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? localStorage.setItem('theme', 'dark')
-      : localStorage.setItem('theme', 'light')
+    localStorage.setItem('theme', 'light')
   }, [])
 
   return (
